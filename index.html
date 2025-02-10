@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, #ffe6e6, #ffb3b3);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .no-btn {
+            background-color: #808080;
+            color: white;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        .teddy {
+            position: absolute;
+            font-size: 2em;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 1.5em;
+            animation: spin 4s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            font-size: 2em;
+            color: #ff4d4d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <button class="button yes-btn" onclick="handleYes()">Yes</button>
+        <button class="button no-btn" onclick="handleNo()">No</button>
+        <div class="success-message" id="successMessage">
+            I knew you would say YES! ❤️
+        </div>
+    </div>
+
+    <script>
+        // Add animated elements
+        function addFloatingElements() {
+            const teddyEmojis = ['🧸'];
+            const flowerEmojis = ['🌹', '🌸', '💐'];
+            
+            for (let i = 0; i < 10; i++) {
+                addElement('teddy', teddyEmojis);
+                addElement('flower', flowerEmojis);
+            }
+        }
+
+        function addElement(className, emojis) {
+            const element = document.createElement('div');
+            element.className = className;
+            element.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            element.style.left = Math.random() * window.innerWidth + 'px';
+            element.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(element);
+        }
+
+        let noCount = 0;
+        const noMessages = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely sure?",
+            "This is your final chance!",
+            "Don't do this to me!"
+        ];
+
+        function handleNo() {
+            const noBtn = document.querySelector('.no-btn');
+            noBtn.textContent = noMessages[noCount % noMessages.length];
+            noBtn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+            noCount++;
+        }
+
+        function handleYes() {
+            // Hide buttons
+            document.querySelector('.yes-btn').style.display = 'none';
+            document.querySelector('.no-btn').style.display = 'none';
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Add more floating elements to celebrate
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => addFloatingElements(), i * 100);
+            }
+
+            // Here you would add code to send notification
+            // This is where you'd make an API call to your backend
+            // Example:
+            // fetch('your-backend-url/notify', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({
+            //         response: 'yes',
+            //         timestamp: new Date().toISOString()
+            //     })
+            // });
+        }
+
+        // Initialize floating elements
+        addFloatingElements();
+    </script>
+</body>
+</html>
